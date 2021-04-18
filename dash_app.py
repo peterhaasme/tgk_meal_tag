@@ -191,5 +191,4 @@ def generate_tags(ingredient_input, low_fat=False, keto=False):
     meal_tags.append("ingredient-spicy")
 
   # Return final tag set
-  #return 'Tag Set: {}'.format(meal_tags)
   return ", ".join(meal_tags)
