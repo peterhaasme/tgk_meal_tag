@@ -9,17 +9,38 @@ external_stylesheets = [dbc.themes.UNITED]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-app.layout = dbc.Jumbotron(children=[
-    html.H6("Enter Ingredients:"),
-    html.Div([dbc.Input(id='my-input', value='initial value')]),
-    html.Br(),
-    html.H6("Meal Tags:"),
-    html.Div(id='my-output'),
-])
+app.layout = dbc.Jumbotron(
+    children = [
+        html.H1(
+            children="TGK Meal Tagging",
+            className="display-4",
+        ),
+        html.P(
+            children="Paste ingredients into the box below to generate tags.",
+            className="lead",
+        ),
+        dbc.Textarea(
+            id = 'my-input',
+            value='ingredients',
+        ),
+        html.Hr(),
+        html.H4("Meal Tags:"),
+        html.Div(
+            id = 'my-output',
+        ),
+    ],
+    style = dict(),
+)
 
 @app.callback(
-    Output(component_id='my-output', component_property='children'),
-    Input(component_id='my-input', component_property='value')
+    Output(
+        component_id='my-output',
+        component_property='children',
+    ),
+    Input(
+        component_id='my-input',
+        component_property='value',
+    ),
 )
 
 def generate_tags(ingredient_input, low_fat=False, keto=False):
