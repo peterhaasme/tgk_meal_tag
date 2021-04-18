@@ -9,20 +9,19 @@ external_stylesheets = [dbc.themes.UNITED]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-app.layout = html.Div([
+app.layout = dbc.Jumbotron(children=[
     html.H6("Enter Ingredients:"),
-    html.Div([dcc.Textarea(id='my-input', value='initial value', cols=100)]),
+    html.Div([dbc.Input(id='my-input', value='initial value')]),
     html.Br(),
+    html.H6("Meal Tags:"),
     html.Div(id='my-output'),
-
 ])
 
 @app.callback(
     Output(component_id='my-output', component_property='children'),
     Input(component_id='my-input', component_property='value')
 )
-#def update_output_div(input_value):
-#    return 'Tag Set: {}'.format(input_value)
+
 def generate_tags(ingredient_input, low_fat=False, keto=False):
   ## Process ingredient input ##
   # Remove any parentheses
@@ -171,4 +170,5 @@ def generate_tags(ingredient_input, low_fat=False, keto=False):
     meal_tags.append("ingredient-spicy")
 
   # Return final tag set
-  return 'Tag Set: {}'.format(meal_tags)
+  #return 'Tag Set: {}'.format(meal_tags)
+  return ", ".join(meal_tags)
