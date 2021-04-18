@@ -7,21 +7,36 @@ import re
 
 external_stylesheets = [dbc.themes.UNITED]
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets = external_stylesheets)
 
 app.layout = dbc.Jumbotron(
     children = [
         html.H1(
-            children="TGK Meal Tagging",
-            className="display-4",
+            children = "TGK Meal Tagging",
+            className = "display-4",
         ),
         html.P(
-            children="Paste ingredients into the box below to generate tags.",
-            className="lead",
+            children = "Paste ingredients into the box below to generate tags.",
+            className = "lead",
         ),
         dbc.Textarea(
             id = 'my-input',
-            value='ingredients',
+            value = 'ingredients',
+            #placeholder = 'ingredients',
+        ),
+        dbc.FormGroup(
+            children = [
+                dbc.Label("Read NFP and select diet tag:"),
+                dbc.Checklist(
+                    options=[
+                        {"label": "Low Fat", "value": 1},
+                        {"label": "Keto", "value": 2},
+                    ],
+                    value=[],
+                    id="switches-input",
+                    switch=True,
+                ),
+            ],
         ),
         html.Hr(),
         html.H4("Meal Tags:"),
