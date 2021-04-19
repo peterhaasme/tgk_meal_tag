@@ -7,58 +7,76 @@ import re
 
 external_stylesheets = [dbc.themes.UNITED]
 
-app = dash.Dash(__name__, external_stylesheets = external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = dbc.Jumbotron(
-    children = [
+    children=[
         html.H1(
-            children = "TGK Meal Tagging",
-            className = "display-4",
+            children="TGK Meal Tagging",
+            className="display-4",
         ),
         html.P(
-            children = "Paste ingredients into the box below to generate tags.",
-            className = "lead",
+            children="Paste ingredients into the box below to generate tags.",
+            className="lead",
         ),
         dbc.Textarea(
-            id = 'ingredient-input',
-            value = 'ingredients',
+            id ="ingredient-input",
+            value="ingredients",
             #placeholder = 'ingredients',
         ),
         dbc.FormGroup(
-            children = [
-                dbc.Label("Read NFP and select diet tag:"),
-                dbc.Checklist(
-                    options=[
-                        {"label": "Low Fat", "value": 1},
-                        {"label": "Keto", "value": 2},
-                    ],
-                    value=[],
-                    id="switches-input",
-                    switch=True,
+            children=[
+                dbc.Checkbox(
+                    id="lowfat-checkbox",
+                    className="form-check-input",
+                ),
+                dbc.Label(
+                    children="Low Fat",
+                    html_for="lowfat-checkbox",
+                    className="form-check-label",
                 ),
             ],
+            check=True,
+        ),
+        dbc.FormGroup(
+            children=[
+                dbc.Checkbox(
+                    id="keto-checkbox",
+                    className="form-check-input",
+                ),
+                dbc.Label(
+                    children="Keto",
+                    html_for="keto-checkbox",
+                    className="form-check-label",
+                ),
+            ],
+            check=True,
         ),
         html.Hr(),
-        html.H4("Meal Tags:"),
-        html.Div(
-            id = 'tag-output',
-        ),
+        html.H4(children="Meal Tags:"),
+        html.Div(id='tag-output'),
     ],
-    style = dict(),
+    style=dict(),
 )
 
 @app.callback(
     Output(
-        component_id='tag-output',
-        component_property='children',
+        component_id="tag-output",
+        component_property = "children",
     ),
     Input(
-        component_id='ingredient-input',
-        component_property='value',
+        component_id = "ingredient-input",
+        component_property = "value",
     ),
+    Input(
+        component_id = "lowfat-checkbox",
+        component_property = "checked"),
+    Input(
+        component_id = "keto-checkbox",
+        component_property = "checked"),
 )
 
-def generate_tags(ingredient_input, low_fat=False, keto=False):
+def generate_tags(ingredient_input, lowfat_checked, keto_checked):
   ## Process ingredient input ##
   # Remove any parentheses
   ingredient_list_1 = ingredient_input.replace(" (", ", ").replace(")", "")
@@ -181,9 +199,9 @@ def generate_tags(ingredient_input, low_fat=False, keto=False):
     meal_tags.append("diet-primal")
   if contains_whole30_prohib == False:
     meal_tags.append("diet-whole-30-approved")
-  if low_fat == True:
+  if lowfat_checked:
     meal_tags.append("diet-low-fat")
-  if keto == True:
+  if keto_checked:
     meal_tags.append("diet-keto")
   # Allergen tags
   if contains_dairy == True:
