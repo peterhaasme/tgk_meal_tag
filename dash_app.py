@@ -16,7 +16,7 @@ app.layout = dbc.Jumbotron(
             className="display-4",
         ),
         html.P(
-            children="Paste ingredients into the box below to generate tags.",
+            children="Paste ingredients into the box below. Then click the boxes to finish generating the tags.",
             className="lead",
         ),
         dbc.Textarea(
@@ -37,6 +37,7 @@ app.layout = dbc.Jumbotron(
                 ),
             ],
             check=True,
+            className="mt-3",
         ),
         dbc.FormGroup(
             children=[
@@ -62,18 +63,18 @@ app.layout = dbc.Jumbotron(
 @app.callback(
     Output(
         component_id="tag-output",
-        component_property = "children",
+        component_property="children",
     ),
     Input(
-        component_id = "ingredient-input",
-        component_property = "value",
+        component_id="ingredient-input",
+        component_property="value",
     ),
     Input(
-        component_id = "lowfat-checkbox",
-        component_property = "checked"),
+        component_id="lowfat-checkbox",
+        component_property="checked"),
     Input(
-        component_id = "keto-checkbox",
-        component_property = "checked"),
+        component_id="keto-checkbox",
+        component_property="checked"),
 )
 
 def generate_tags(ingredient_input, lowfat_checked, keto_checked):
