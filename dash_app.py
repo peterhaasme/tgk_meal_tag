@@ -20,7 +20,7 @@ app.layout = dbc.Jumbotron(
             className = "lead",
         ),
         dbc.Textarea(
-            id = 'my-input',
+            id = 'ingredient-input',
             value = 'ingredients',
             #placeholder = 'ingredients',
         ),
@@ -41,7 +41,7 @@ app.layout = dbc.Jumbotron(
         html.Hr(),
         html.H4("Meal Tags:"),
         html.Div(
-            id = 'my-output',
+            id = 'tag-output',
         ),
     ],
     style = dict(),
@@ -49,11 +49,11 @@ app.layout = dbc.Jumbotron(
 
 @app.callback(
     Output(
-        component_id='my-output',
+        component_id='tag-output',
         component_property='children',
     ),
     Input(
-        component_id='my-input',
+        component_id='ingredient-input',
         component_property='value',
     ),
 )
