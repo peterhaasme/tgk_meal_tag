@@ -230,5 +230,5 @@ def generate_tags(ingredient_input, lowfat_checked, keto_checked):
   # Return final tag set
   return ", ".join(meal_tags)
 
-  if __name__ == '__main__':
-      app.run_server(debug=True)
+if __name__ == '__main__':
+    app.run_server(debug=True)
